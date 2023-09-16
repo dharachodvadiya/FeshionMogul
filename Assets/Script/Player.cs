@@ -5,10 +5,7 @@ using UnityEngine;
 public class Player : StateMachine
 {
 
-    public GameObject objPlayer;         // player's reference
-    //public Collider collider;           //player's colider
-                                        // public Rigidbody rigidbody;           //player's rigidbody
-   // public Transform transformCamera;   //followed camera reference
+    public GameObject objPlayer;         
     public float MovementSpeed { get; private set; } = 3f;
     public float JumpForce { get; private set; } = 5f;
     public float LookRotationDampFactor { get; private set; } = 7f;
@@ -25,7 +22,7 @@ public class Player : StateMachine
     {
         InputReader = GetComponent<InputReader>();
         SwitchState(new PlayerMoveState(this));
-        setIsCarry(true);
+        setIsCarry(false);
 
     }
 
