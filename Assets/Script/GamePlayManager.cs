@@ -16,4 +16,17 @@ public class GamePlayManager : MonoBehaviour
     {
         Player
     }
+
+
+    public class ItemInfo
+    {
+        public enumCarryItem enumCarry;
+        public int price;
+
+        public ItemInfo(enumCarryItem enumCarry, int price)
+        {
+            this.enumCarry = enumCarry;
+            this.price = price;
+        }
+    }
 }
