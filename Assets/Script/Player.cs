@@ -20,7 +20,7 @@ public class Player : StateMachine
 
     public bool IsCarry = false;
 
-    public List<ItemInfo> itemList = new List<ItemInfo>();
+    //public List<ItemInfo> itemList = new List<ItemInfo>();
 
     public Transform stackParent;
 
@@ -49,73 +49,84 @@ public class Player : StateMachine
 
     public void addItem(ItemInfo item)
     {
-        itemList.Add(item);
+        
 
         dicHasItem[item.enumCarry] = true;
 
-        if (itemList.Count >0)
-        {
-            setIsCarry(true);
-        }
-        else
-        {
-            setIsCarry(false);
-        }
+       
 
         GameObject objItem = poolItem(item);
         itemStack.Add(objItem);
+        //itemList.Add(item);
 
         resetStack();
     }
 
-    public ItemInfo removeItem(ItemInfo item)
+    public GameObject removeItem(enumCarryItem enumCarry)
     {
-        ItemInfo rItem = null;
-        if(dicHasItem[item.enumCarry])
+        GameObject rItem = null;
+        if(dicHasItem[enumCarry])
         {
-            for (int i = 0; i < itemList.Count; i++)
+            //for (int i = 0; i < itemList.Count; i++)
+            //{
+            //    if (itemList[i].enumCarry == enumCarry)
+            //    {
+            //        rItem = itemList[i];
+            //        itemList.RemoveAt(i);
+            //        break;
+            //    }
+            //}
+            //
+            //for (int i = 0; i < itemList.Count; i++)
+            //{
+            //    if (itemList[i].enumCarry == enumCarry)
+            //    {
+            //        isremoveItemAvailable = true;
+            //        break;
+            //    }
+            //}
+
+            for (int i = 0; i < poolItemList[enumCarry].Count; i++)
             {
-                if (itemList[i].enumCarry == item.enumCarry)
+                if (poolItemList[enumCarry][i].activeInHierarchy)
                 {
-                    rItem = itemList[i];
-                    itemList.RemoveAt(i);
+                    poolItemList[enumCarry][i].SetActive(false);
+                    rItem = poolItemList[enumCarry][i];
                     break;
                 }
             }
             bool isremoveItemAvailable = false;
-            for (int i = 0; i < itemList.Count; i++)
+            for (int i = 0; i < poolItemList[enumCarry].Count; i++)
             {
-                if (itemList[i].enumCarry == item.enumCarry)
+                if (poolItemList[enumCarry][i].activeInHierarchy)
                 {
                     isremoveItemAvailable = true;
                     break;
                 }
             }
 
+            
             if (!isremoveItemAvailable)
             {
-                dicHasItem[item.enumCarry] = false;
+                dicHasItem[enumCarry] = false;
             }
+
+           
+
+            for (int i = 0; i < itemStack.Count; i++)
+            {
+                if (!itemStack[i].activeInHierarchy)
+                {
+                    itemStack.RemoveAt(i);
+                    break;
+                }
+            }
+            resetStack();
         }
 
-        for (int i = 0; i < poolItemList[item.enumCarry].Count; i++)
-        {
-            if (!poolItemList[item.enumCarry][i].activeInHierarchy)
-            {
-                poolItemList[item.enumCarry][i].SetActive(false);
-                break;
-            }
-        }
+        
 
-        for (int i = 0; i < itemStack.Count; i++)
-        {
-            if(!itemStack[i].activeInHierarchy)
-            {
-                itemStack.RemoveAt(i);
-                break;
-            }
-        }
-        resetStack();
+       
         return rItem;
     }
 
@@ -157,6 +168,15 @@ public class Player : StateMachine
         {
             itemStack[i].transform.localPosition = pos;
             pos.y += 0.05f;
+        }
+
+        if (itemStack.Count > 0)
+        {
+            setIsCarry(true);
+        }
+        else
+        {
+            setIsCarry(false);
         }
     }
 }
