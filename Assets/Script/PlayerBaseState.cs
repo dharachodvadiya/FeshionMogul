@@ -20,21 +20,22 @@ public abstract class PlayerBaseState : State
     //    return Physics.SphereCast(ray, colExtents.x, colExtents.x + 0.2f);
     //}
     // calculate the player move direction
-    protected void CalculateMoveDirection()
+    private void CalculateMoveDirection(float h, float v, float moveSpeed, ref Vector3 lookDir)
     {
         Vector3 cameraForward = new(Vector3.forward.x, 0, Vector3.forward.z);
         Vector3 cameraRight = new(Vector3.right.x, 0, Vector3.right.z);
 
-        Vector3 moveDirection = cameraForward.normalized * player.InputReader.MoveComposite.y + cameraRight.normalized * player.InputReader.MoveComposite.x;
+        Vector3 moveDirection = cameraForward.normalized * v + cameraRight.normalized * h;
 
-        player.PlayerLookDirection.x = moveDirection.x * player.MovementSpeed;
-        player.PlayerLookDirection.z = moveDirection.z * player.MovementSpeed;
+       lookDir.x = moveDirection.x * moveSpeed;
+        lookDir.z = moveDirection.z * moveSpeed;
+
+        FaceMoveDirection(lookDir );
     }
 
     // rotate player on calculated direction
-    protected void FaceMoveDirection()
+    private void FaceMoveDirection(Vector3 faceDirection)
     {
-        Vector3 faceDirection = player.PlayerLookDirection;
         faceDirection.y = 0;
 
         if (faceDirection == Vector3.zero)
@@ -44,10 +45,23 @@ public abstract class PlayerBaseState : State
     }
 
     //move player to the target direction
-    protected void Move()
+    private void Move(float movespeed, ref Vector3 lookDir)
     {
-        player.transform.position += player.PlayerLookDirection * Time.deltaTime * player.MovementSpeed;
+        player.transform.position += lookDir * Time.deltaTime * movespeed;
 
+    }
+
+    protected void MoveManagement(float horizontal, float vertical, float moveSpeed, ref Vector3 lookDir)
+    {
+        Vector2 dir = new Vector2(horizontal, vertical);
+        float speed = Vector2.ClampMagnitude(dir, 1f).magnitude;
+
+        Move(speed, ref lookDir);
+        CalculateMoveDirection(horizontal, vertical, speed*5, ref lookDir);
+
+        player.behaviourManager.setSpeed(speed);
+       
+     
     }
 
 }

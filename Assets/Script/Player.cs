@@ -5,10 +5,7 @@ using UnityEngine;
 public class Player : StateMachine
 {
 
-    public GameObject objPlayer;         // player's reference
-    //public Collider collider;           //player's colider
-                                        // public Rigidbody rigidbody;           //player's rigidbody
-   // public Transform transformCamera;   //followed camera reference
+    public GameObject objPlayer;         
     public float MovementSpeed { get; private set; } = 3f;
     public float JumpForce { get; private set; } = 5f;
     public float LookRotationDampFactor { get; private set; } = 7f;
@@ -17,10 +14,21 @@ public class Player : StateMachine
     [HideInInspector]
     public Vector3 PlayerLookDirection = Vector3.forward;   //current direction of player
 
+    public BehaviourManager behaviourManager;
+
+    public bool IsCarry = false;
+
     private void Start()
     {
         InputReader = GetComponent<InputReader>();
         SwitchState(new PlayerMoveState(this));
+        setIsCarry(false);
 
+    }
+
+    public void setIsCarry(bool isCarry)
+    {
+        IsCarry = isCarry;
+        behaviourManager.setIsCarry(IsCarry);
     }
 }
