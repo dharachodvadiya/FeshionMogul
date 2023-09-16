@@ -22,7 +22,12 @@ public class Player : StateMachine
 
     public List<ItemInfo> itemList = new List<ItemInfo>();
 
+    public Transform stackParent;
+
     Dictionary<enumCarryItem, bool> dicHasItem = new Dictionary<enumCarryItem, bool>();
+    Dictionary<enumCarryItem, List<GameObject>> poolItemList = new Dictionary<enumCarryItem, List<GameObject>>();
+
+    public List<GameObject> itemStack = new List<GameObject>();
 
     private void Start()
     {
@@ -56,6 +61,11 @@ public class Player : StateMachine
         {
             setIsCarry(false);
         }
+
+        GameObject objItem = poolItem(item);
+        itemStack.Add(objItem);
+
+        resetStack();
     }
 
     public ItemInfo removeItem(ItemInfo item)
@@ -87,7 +97,66 @@ public class Player : StateMachine
                 dicHasItem[item.enumCarry] = false;
             }
         }
-       
+
+        for (int i = 0; i < poolItemList[item.enumCarry].Count; i++)
+        {
+            if (!poolItemList[item.enumCarry][i].activeInHierarchy)
+            {
+                poolItemList[item.enumCarry][i].SetActive(false);
+                break;
+            }
+        }
+
+        for (int i = 0; i < itemStack.Count; i++)
+        {
+            if(!itemStack[i].activeInHierarchy)
+            {
+                itemStack.RemoveAt(i);
+                break;
+            }
+        }
+        resetStack();
         return rItem;
+    }
+
+    public GameObject poolItem(ItemInfo item)
+    {
+        GameObject gameObject = null;
+        if(poolItemList.ContainsKey(item.enumCarry))
+        {
+            for (int i = 0; i < poolItemList[item.enumCarry].Count; i++)
+            {
+                if(!poolItemList[item.enumCarry][i].activeInHierarchy)
+                {
+                    gameObject = poolItemList[item.enumCarry][i];
+                    break;
+                }
+            }
+            if(gameObject == null)
+            {
+                gameObject = Instantiate(item.itemPrefab, stackParent);
+                poolItemList[item.enumCarry].Add(gameObject); 
+            }
+        }
+        else
+        {
+            gameObject = Instantiate(item.itemPrefab, stackParent);
+
+            List<GameObject> objList = new List<GameObject>();
+            objList.Add(gameObject);
+            poolItemList.Add(item.enumCarry, objList);
+        }
+        gameObject.SetActive(true);
+        return gameObject;
+    }
+
+    public void resetStack()
+    {
+        Vector3 pos = Vector3.zero;
+        for (int i = 0; i < itemStack.Count; i++)
+        {
+            itemStack[i].transform.localPosition = pos;
+            pos.y += 0.05f;
+        }
     }
 }

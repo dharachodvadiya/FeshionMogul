@@ -9,6 +9,8 @@ public class Stole : MonoBehaviour
     public enumCarryItem carryItem;
     public int price = 10;
 
+    public GameObject ItemPrefab;
+
     private ItemInfo itemInfo;
     private Player currPlayer;
 
@@ -16,7 +18,8 @@ public class Stole : MonoBehaviour
 
     private void Start()
     {
-        itemInfo = new ItemInfo(carryItem, price);
+        itemInfo = new ItemInfo(carryItem, price, ItemPrefab);
+        objTouch.SetActive(false);
     }
 
     public ItemInfo getItem()
@@ -52,6 +55,7 @@ public class Stole : MonoBehaviour
 
     public void btnCarryClick()
     {
+        //Debug.Log("btnClick");
         if(currPlayer != null)
         {
             currPlayer.addItem(itemInfo);

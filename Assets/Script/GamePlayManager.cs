@@ -17,16 +17,17 @@ public class GamePlayManager : MonoBehaviour
         Player
     }
 
-
     public class ItemInfo
     {
         public enumCarryItem enumCarry;
         public int price;
+        public GameObject itemPrefab;
 
-        public ItemInfo(enumCarryItem enumCarry, int price)
+        public ItemInfo(enumCarryItem enumCarry, int price, GameObject itemPrefab)
         {
             this.enumCarry = enumCarry;
             this.price = price;
+            this.itemPrefab = itemPrefab;
         }
     }
 }
