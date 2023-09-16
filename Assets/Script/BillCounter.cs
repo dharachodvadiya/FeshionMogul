@@ -28,7 +28,7 @@ public class BillCounter : MonoBehaviour
     public void giveItemToCustomer()
     {
         isOpen = true;
-        currentCustomer.gameObject.SetActive(false);
+        //currentCustomer.gameObject.SetActive(false);
         currentCustomer = null;
 
         StartCoroutine(coroutineCreateCustomer());
@@ -42,7 +42,7 @@ public class BillCounter : MonoBehaviour
 
     IEnumerator coroutineCreateCustomer()
     {
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(Random.Range(3,7));
         gamePlayManager.createCustomer(this);
     }
 }

@@ -20,6 +20,9 @@ public class GamePlayManager : MonoBehaviour
         Player
     }
 
+    public Transform custSpawnPoint1;
+    public Transform custSpawnPoint2;
+
     public class ItemInfo
     {
         public enumCarryItem enumCarry;
@@ -37,7 +40,8 @@ public class GamePlayManager : MonoBehaviour
     public void createCustomer(BillCounter billCounter)
     {
         GameObject objCust = poolCustomer();
-        objCust.transform.position = billCounter.gameObject.transform.position;
+        //objCust.transform.position = billCounter.gameObject.transform.position;
+        objCust.transform.position = new Vector3(Random.Range(custSpawnPoint1.position.x, custSpawnPoint2.position.x), custSpawnPoint1.position.y, custSpawnPoint1.position.z);
         objCust.GetComponent<Customer>().setData((enumCarryItem)Random.Range(0, 4),billCounter);
         billCounter.setCustomer(objCust.GetComponent<Customer>());
     }
