@@ -29,6 +29,6 @@ public class InputReader : MonoBehaviour, IGameActions
     {
         MoveComposite = context.ReadValue<Vector2>();
 
-        Debug.Log(MoveComposite);
+       // Debug.Log(MoveComposite);
     }
 }
