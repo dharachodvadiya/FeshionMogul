@@ -17,10 +17,21 @@ public class Player : StateMachine
     [HideInInspector]
     public Vector3 PlayerLookDirection = Vector3.forward;   //current direction of player
 
+    public BehaviourManager behaviourManager;
+
+    public bool IsCarry = false;
+
     private void Start()
     {
         InputReader = GetComponent<InputReader>();
         SwitchState(new PlayerMoveState(this));
+        setIsCarry(true);
 
+    }
+
+    public void setIsCarry(bool isCarry)
+    {
+        IsCarry = isCarry;
+        behaviourManager.setIsCarry(IsCarry);
     }
 }

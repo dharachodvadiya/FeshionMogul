@@ -15,9 +15,7 @@ public class PlayerMoveState : PlayerBaseState
     }
 
     public override void Run()
-    {       
-        CalculateMoveDirection();
-        FaceMoveDirection();
-        Move();
+    {
+        MoveManagement(player.InputReader.MoveComposite.x, player.InputReader.MoveComposite.y, player.MovementSpeed, ref player.PlayerLookDirection);
     }
 }

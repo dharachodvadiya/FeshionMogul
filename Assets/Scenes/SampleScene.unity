@@ -534,6 +534,7 @@ GameObject:
   - component: {fileID: 1455553102}
   - component: {fileID: 1455553103}
   - component: {fileID: 1455553104}
+  - component: {fileID: 1455553105}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -584,6 +585,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objPlayer: {fileID: 1455553101}
   PlayerLookDirection: {x: 0, y: 0, z: 1}
+  behaviourManager: {fileID: 1455553105}
+--- !u!114 &1455553105
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1455553101}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 960e1caad20514443b49c45c63be4991, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 0
+  speedDampTime: 0.1
+  anim: {fileID: 1793525390}
 --- !u!1001 &1793525387
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -661,7 +678,7 @@ Animator:
   m_GameObject: {fileID: 1793525389}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: e79c8a092c570144cae6864656fa1dc9, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
