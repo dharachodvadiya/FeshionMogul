@@ -7,6 +7,8 @@ public class GamePlayManager : MonoBehaviour
     public GameObject customerPrefab;
 
     public List<GameObject> objCustomerList = new List<GameObject>();
+
+    public VariableJoystick variableJoystick;
     public enum enumCarryItem
     {
         Red,

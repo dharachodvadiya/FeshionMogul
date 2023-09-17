@@ -41,3 +41,9 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: stoleButton
+    uniqueID: 4179985975
+    locked: 0
+  - name: Joystick
+    uniqueID: 262189079
+    locked: 0

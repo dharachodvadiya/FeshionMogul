@@ -2,33 +2,26 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using static Controls;
 using static UnityEngine.InputSystem.DefaultInputActions;
 
-public class InputReader : MonoBehaviour, IGameActions
+public class InputReader : MonoBehaviour
 {
-    public Controls inputControls;
-
     public Vector2 MoveComposite;
 
-    private void OnEnable()
+    GamePlayManager gamePlayManager;
+
+    bool isDreg = false;
+
+    Vector2 cuttDirection;
+    Vector2 prevPos = Vector3.zero;
+
+    private void Start()
     {
-        if (inputControls == null)
-        {
-            inputControls = new Controls();
-            inputControls.Game.SetCallbacks(this);
-        }
-        inputControls.Game.Enable();
+        gamePlayManager = FindAnyObjectByType<GamePlayManager>();
     }
 
-    private void OnDisable()
+    private void Update()
     {
-        inputControls.Disable();
-    }
-    public void OnMove(InputAction.CallbackContext context)
-    {
-        MoveComposite = context.ReadValue<Vector2>();
-
-       // Debug.Log(MoveComposite);
+         MoveComposite = new Vector2(gamePlayManager.variableJoystick.Horizontal, gamePlayManager.variableJoystick.Vertical);
     }
 }

@@ -47,7 +47,7 @@ public abstract class PlayerBaseState : State
     //move player to the target direction
     private void Move(float movespeed, ref Vector3 lookDir)
     {
-        player.transform.position += lookDir * Time.deltaTime * movespeed;
+        player.transform.position += lookDir.normalized * Time.deltaTime * movespeed;
 
     }
 
@@ -56,8 +56,17 @@ public abstract class PlayerBaseState : State
         Vector2 dir = new Vector2(horizontal, vertical);
         float speed = Vector2.ClampMagnitude(dir, 1f).magnitude;
 
-        Move(speed, ref lookDir);
-        CalculateMoveDirection(horizontal, vertical, speed*5, ref lookDir);
+        CalculateMoveDirection(horizontal, vertical, speed, ref lookDir);
+
+        if(speed > 0.1)
+        {
+            Move(2, ref lookDir);
+        }
+        else
+        {
+            Move(speed, ref lookDir);
+        }
+       
 
         player.behaviourManager.setSpeed(speed);
        
